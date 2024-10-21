@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+// import { useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 const AddExpenseForm = () => {
   // Exercise: Consume the AppContext here
+  const {expenses, setExpenses} = useContext(AppContext)
 
   // Exercise: Create name and cost to state variables
+  const [name, setname] = useState("")
+  const [cost, setCost] = useState(0)
+
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
