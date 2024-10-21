@@ -1,58 +1,35 @@
-import React, { useState, useContext } from "react";
-// import { useContext } from "react";
-import { AppContext } from "../../context/AppContext";
+import { createContext, useState } from "react";
 import { Expense } from "../../types/types";
-const AddExpenseForm = () => {
-  // Exercise: Consume the AppContext here
-  const {expenses, setExpenses} = useContext(AppContext)
 
-  // Exercise: Create name and cost to state variables
-  const [name, setname] = useState<string>("")
-  const [cost, setCost] = useState<number>(0)
+// Exercise: Create add budget to the context
 
+interface AppContextType {
+  expenses: Expense[];
+  setExpenses: React.Dispatch<React.SetStateAction<Expense[]>>;
+  budget: number;
+}
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    // Exercise: Add add new expense to expenses context array
-    const newExpense: Expense = {id:(expenses.length + 1).toString(),name:name,cost:cost};
-    setExpenses([...expenses,newExpense]);
-  };
-
-  return (
-    <form onSubmit={(event) => onSubmit(event)}>
-      <div className="row">
-        <div className="col-sm">
-          <label htmlFor="name">Name</label>
-          <input
-            required
-            type="text"
-            className="form-control"
-            id="name"
-            value={name}
-            // HINT: onChange={}
-            onChange={(e) => setname(e.target.value)}
-          ></input>
-        </div>
-        <div className="col-sm">
-          <label htmlFor="cost">Cost</label>
-          <input
-            required
-            type="text"
-            className="form-control"
-            id="cost"
-            value={cost}
-            onChange={(e) => setCost(parseInt(e.target.value))}
-          ></input>
-        </div>
-        <div className="col-sm">
-          <button type="submit" className="btn btn-primary mt-3">
-            Save
-          </button>
-        </div>
-      </div>
-    </form>
-  );
+const initialState: AppContextType = {
+  expenses: [],
+  setExpenses: () => {},
+  budget: 20,
 };
 
-export default AddExpenseForm;
+export const AppContext = createContext<AppContextType>(initialState);
+
+export const AppProvider = (props: any) => {
+  const [expenses, setExpenses] = useState<Expense[]>(initialState.expenses);
+
+  return (
+    <AppContext.Provider
+      value={{
+        expenses: expenses,
+        setExpenses: setExpenses,
+        budget: initialState.budget,
+      }}
+    >
+      {props.children}
+    </AppContext.Provider>
+
+  );
+};
