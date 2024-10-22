@@ -1,8 +1,8 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import App from "./App";
 
-describe("Create an Expense", () => {
-    test("Verify that a new expense is correctly added to the expense list", () => {
+describe("Delete an Expense", () => {
+    test("Confirm that an expense is successfully removed from the list", async () => {
       render(<App/>);
 
       const originalRemaining = screen.getByText("Remaining: $20")
@@ -64,5 +64,32 @@ describe("Create an Expense", () => {
 
       const newspent = screen.getByText("Spent so far: $12");
       expect(newspent).toBeInTheDocument();
+
+      //delete expenses
+      const deleteButton1 = screen.getAllByText("x")[0];
+      fireEvent.click(deleteButton1);
+
+      expect(newExpenseName3).not.toBeInTheDocument();
+      expect(newExpenseCost3).not.toBeInTheDocument();
+
+      const deleteButton2 = screen.getAllByText("x")[0];
+      fireEvent.click(deleteButton2);
+
+      expect(newExpenseName2).not.toBeInTheDocument();
+      expect(newExpenseCost2).not.toBeInTheDocument();
+
+      const deleteButton3 = screen.getAllByText("x")[0];
+      fireEvent.click(deleteButton3);
+
+      expect(newExpenseName).not.toBeInTheDocument();
+      expect(newExpenseCost).not.toBeInTheDocument();
+      
+      //calculated correcrly
+      const newRemaining1 = screen.getByText("Remaining: $20")
+      expect(newRemaining1).toBeInTheDocument();
+
+      const newspent1 = screen.getByText("Spent so far: $0");
+      expect(newspent1).toBeInTheDocument();
+
     });
   });
