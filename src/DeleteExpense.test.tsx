@@ -5,7 +5,7 @@ describe("Delete an Expense", () => {
     test("Confirm that an expense is successfully removed from the list", async () => {
       render(<App/>);
 
-      const originalRemaining = screen.getByText("Remaining: $200")
+      const originalRemaining = screen.getByText("Remaining: $20")
       expect(originalRemaining).toBeInTheDocument();
 
       const originalspent = screen.getByText("Spent so far: $0");
