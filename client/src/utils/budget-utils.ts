@@ -34,7 +34,30 @@ export const fetchBudget = async (): Promise<number> => {
 // 	return expenseList;
 // };
 
-export function updateBudget(res: Response, body: any, budget: { amount: number }) 
-{
-	// TO DO: Implement updateBudget function
-}
+// Function to update the budget in the backend. Method: PUT
+export const updateBudget = async (budget: number): Promise<number> => {
+	const response = await fetch(`${API_BASE_URL}/budget`, {
+    	method: "PUT",
+    	headers: {
+        	"Content-Type": "application/json",
+    	},
+    	body: JSON.stringify(budget),
+	});
+	if (!response.ok) {
+    	throw new Error("Failed to update budget");
+	}
+	return response.json();};
+
+// export const createExpense = async (expense: Expense): Promise<Expense> => {
+// 	const response = await fetch(`${API_BASE_URL}/expenses`, {
+//     	method: "POST",
+//     	headers: {
+//         	"Content-Type": "application/json",
+//     	},
+//     	body: JSON.stringify(expense),
+// 	});
+// 	if (!response.ok) {
+//     	throw new Error("Failed to create expense");
+// 	}
+// 	return response.json();
+// };
