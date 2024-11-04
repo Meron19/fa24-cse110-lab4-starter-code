@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": "../lab5-budget-tracker-express-apis-starter-code-main",
     "strict": true,
     "esModuleInterop": true,
     "module": "commonjs",
